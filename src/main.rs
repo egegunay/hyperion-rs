@@ -2,13 +2,15 @@ mod db;
 mod handlers;
 mod state;
 
+use std::sync::Arc;
+
 use handlers::{delete, insert, read, update};
-use state::new_state;
+use state::State;
 use warp::Filter;
 
 #[tokio::main]
 async fn main() {
-    let state = new_state();
+    let state: Arc<State> = Default::default();
 
     let inserter = warp::path!("insert" / String).and_then({
         let state = state.clone();
