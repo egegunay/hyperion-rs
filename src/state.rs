@@ -1,14 +1,14 @@
 use std::collections::HashMap;
+use std::sync::{Arc, Mutex, RwLock};
 
-#[derive(Clone)]
-pub struct State {
-    pub data: HashMap<String, u64>,
+pub struct SharedState {
+    pub data: HashMap<String, Arc<Mutex<u64>>>,
 }
 
-impl State {
-    pub fn new() -> Self {
-        Self {
-            data: HashMap::default(),
-        }
-    }
+pub type State = Arc<RwLock<SharedState>>;
+
+pub fn new_state() -> State {
+    Arc::new(RwLock::new(SharedState {
+        data: HashMap::new(),
+    }))
 }
