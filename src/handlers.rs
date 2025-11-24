@@ -23,7 +23,7 @@ pub async fn read(key: String, state: Arc<State>) -> Result<String, Infallible> 
     }
 }
 
-pub async fn update(key: String, new_value: u64, state: Arc<State>) -> Result<String, Infallible> {
+pub async fn update(key: String, new_value: i64, state: Arc<State>) -> Result<String, Infallible> {
     let mut guard = state.data.write().expect("RwLock poisoned");
 
     if let Some(value) = guard.get_mut(&key) {
@@ -298,7 +298,7 @@ mod tests {
         
         // All results should be valid
         for result in &results {
-            assert!(result.parse::<u64>().is_ok());
+            assert!(result.parse::<i64>().is_ok());
         }
         
         // The final value should be 10 (since we ran 10 inserts)

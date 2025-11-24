@@ -22,7 +22,7 @@ async fn main() {
         move |p| read(p, state.clone())
     });
 
-    let updater = warp::path!("update" / String / u64).and_then({
+    let updater = warp::path!("update" / String / i64).and_then({
         let state = state.clone();
         move |p, v| update(p, v, state.clone())
     });
